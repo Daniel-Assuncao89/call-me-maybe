@@ -109,17 +109,6 @@ uv run python -m src --trace-html trace.html    # visualização em HTML
 uv run python -m src --use-sdk-tokenizer        # compara com o tokenizer da SDK
 ```
 
-## Resultados
-
-Preencha com números **medidos por você**, rodando com o modelo real:
-
-| Métrica | Valor |
-|---|---|
-| Acerto da função | \<x\>/\<n\> |
-| Acerto função + parâmetros | \<x\>/\<n\> |
-| JSON válido | \<x\>/\<n\> |
-| Tempo total | \<segundos\> |
-
 ## Limitações e próximos passos
 
 - A escolha dentro do conjunto permitido é gulosa (sem *sampling* nem *beam search*); a qualidade depende do modelo e do prompt.
@@ -127,9 +116,3 @@ Preencha com números **medidos por você**, rodando com o modelo real:
 - Números têm no máximo 24 tokens e expoente de 2 dígitos.
 - Não há suporte a `oneOf`/`anyOf`.
 - Próximos passos: *beam search* restrito, medir o efeito de cada exemplo do prompt e permitir a resposta "nenhuma função".
-
-## Recursos
-
-- Subject *call me maybe* (42) e model card do Qwen3 na Hugging Face.
-- Sennrich et al., *Neural Machine Translation of Rare Words with Subword Units* (BPE); RFC 8259 (JSON).
-- Uso de IA: \<descreva com honestidade em quais tarefas a IA ajudou e o que você escreveu e entendeu por conta própria\>
