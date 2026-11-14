@@ -1,0 +1,30 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial","fontSize":"15px","primaryColor":"#e8f0fe","primaryBorderColor":"#3b5bdb","primaryTextColor":"#1b2430","lineColor":"#4a5568","secondaryColor":"#e6fcf5","tertiaryColor":"#fff4e6"}}}%%
+flowchart TD
+    A["Pedido em linguagem natural<br/><i>What is the sum of 2 and 3?</i>"]
+    B["functions_definition.json<br/>+ function_calling_tests.json<br/><b>validados com pydantic</b>"]
+    C["Prompt termina em<br/><code>Answer: {&quot;name&quot;: &quot;</code>"]
+    D["<b>1. Escolher a função</b><br/>só tokens que formam nomes existentes<br/>o LLM decide entre eles"]
+    E["<b>2. Escrever a estrutura</b><br/><code>&quot;parameters&quot;: {&quot;a&quot;: </code><br/>forçado pelo programa, sem chamar o modelo"]
+    F["<b>3. Gerar cada valor</b><br/>logits proibidos = −∞<br/>autômato por tipo: número, string, enum, array, objeto"]
+    G{"Parar ou continuar?<br/>massa de probabilidade<br/>dos tokens (log-sum-exp)"}
+    H["conforms_call<br/>valida contra o schema"]
+    I["Retry com prompt compacto"]
+    J["Aviso e prompt pulado"]
+    K["function_calls.json<br/>[{prompt, name, parameters}]<br/>escrita atômica"]
+
+    A --> C
+    B --> C
+    C --> D --> E --> F --> G
+    G -- "continuar" --> F
+    G -- "parar" --> H
+    H -- "ok" --> K
+    H -- "falhou" --> I
+    I -- "ok" --> K
+    I -- "falhou de novo" --> J
+
+    classDef io fill:#e8f0fe,stroke:#3b5bdb,color:#1b2430;
+    classDef core fill:#e6fcf5,stroke:#0b7a63,color:#1b2430;
+    classDef warn fill:#fff4e6,stroke:#d9480f,color:#1b2430;
+    class A,B,K io;
+    class C,D,E,F,G core;
+    class H,I,J warn;
