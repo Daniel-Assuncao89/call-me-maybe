@@ -26,6 +26,26 @@ Resultado: a saída nunca é sintaticamente inválida, e o modelo só pode errar
 
 *Código-fonte do diagrama: [`docs/fluxo.mmd`](docs/fluxo.mmd) (Mermaid). Versão vetorial: [`docs/fluxo.svg`](docs/fluxo.svg).*
 
+## Como usar
+
+Requisitos: Python 3.10 ou superior e [uv](https://docs.astral.sh/uv/).
+
+```bash
+make install        # uv sync
+make run            # data/input/*.json → data/output/function_calls.json
+make test           # 68 testes, sem baixar o modelo
+make lint           # flake8 + mypy
+```
+
+Opções úteis:
+
+```bash
+uv run python -m src --functions_definition F --input P --output O
+uv run python -m src --trace                    # cada passo no terminal
+uv run python -m src --trace-html trace.html    # visualização em HTML
+uv run python -m src --use-sdk-tokenizer        # compara com o tokenizer da SDK
+```
+
 ## Principais aprendizados
 
 ### 1. Um LLM só prevê o próximo token
@@ -87,26 +107,6 @@ src/
 └── errors.py         hierarquia de exceções
 tests/                68 testes com modelo simulado
 docs/                 diagrama do fluxo
-```
-
-## Como usar
-
-Requisitos: Python 3.10 ou superior e [uv](https://docs.astral.sh/uv/).
-
-```bash
-make install        # uv sync
-make run            # data/input/*.json → data/output/function_calls.json
-make test           # 68 testes, sem baixar o modelo
-make lint           # flake8 + mypy
-```
-
-Opções úteis:
-
-```bash
-uv run python -m src --functions_definition F --input P --output O
-uv run python -m src --trace                    # cada passo no terminal
-uv run python -m src --trace-html trace.html    # visualização em HTML
-uv run python -m src --use-sdk-tokenizer        # compara com o tokenizer da SDK
 ```
 
 ## Limitações e próximos passos
